@@ -1,5 +1,5 @@
 // Fetch data
-let fetchData = await fetch("./db/og-csrd-fr.json");
+let fetchData = await fetch("./db/og-csrd.json");
 let data = await fetchData.json();
 
 //initialize

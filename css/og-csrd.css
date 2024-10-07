@@ -16,6 +16,16 @@
     font-family: Orbitron;
     src:url('../fonts/Orbitron-VariableFont_wght.ttf') format(truetype);
 }
+@font-face {
+    font-family: 'Shantell Sans';
+    src:url('../fonts/ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf') format(truetype);
+	font-style: normal;
+}
+@font-face {
+    font-family: 'Shantell Sans';
+    src:url('../fonts/ShantellSans-Italic-VariableFont_BNCE,INFM,SPAC,wght.ttf') format(truetype);
+	font-style: italic;
+}
 
 /* width, by percent */
 .w-95 { width: 95% !important; }
@@ -1008,11 +1018,18 @@ a.og-csrd-link-white:hover { color: #fff !important; }
 	border-left: 0.25rem solid;
 }
 
+.og-ed {
+	font-family: 'Shantell Sans', Arial, sans-serif;
+	font-size: 85%;
+}
+
 .theme-light .og-ed {
+	color: #2d2a83;
 	border-color: #408b93;
 	background-color: #fffbf2 !important;
 }
 .theme-dark .og-ed {
+	color: #c0e0e8;
 	border-color: #408b93;
 	background-color: #1f2733 !important;
 }
@@ -1039,12 +1056,14 @@ div.og-alert {
 }
 .theme-light div.og-alert h4, 
 .theme-light div.og-alert h5, 
-.theme-light div.og-alert h6 {
+.theme-light div.og-alert h6,
+.theme-light div.og-alert .h7 {
 	color: #408b93 !important;
 }
 .theme-dark div.og-alert h4, 
 .theme-dark div.og-alert h5, 
-.theme-dark div.og-alert h6 {
+.theme-dark div.og-alert h6,
+.theme-dark div.og-alert .h7 {
 	color: #408b93 !important;
 }
 div.og-alert .og-border { 
