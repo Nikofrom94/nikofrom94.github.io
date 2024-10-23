@@ -6,7 +6,7 @@ if (sectionID) {
 
     const section = document.getElementById(sectionID);
     if (section) {
-      const currentScroll = window.pageYOffset;
+      const currentScroll = window.scrollY;
       const targetScroll = currentScroll;
       const duration = 500; // Animation duration in milliseconds
       const startTime = performance.now();
@@ -15,7 +15,8 @@ if (sectionID) {
         const elapsedTime = currentTime - startTime;
         const scrollProgress = Math.min(elapsedTime / duration, 1);
         const easedProgress = easeOutCubic(scrollProgress);
-        const scrollTo = currentScroll + (sectionOffset * easedProgress);
+        //const scrollTo = currentScroll + (sectionOffset * easedProgress);
+        const scrollTo = currentScroll + (currentScroll * easedProgress);
 
         window.scrollTo(0, scrollTo);
 
