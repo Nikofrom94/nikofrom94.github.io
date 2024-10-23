@@ -10,13 +10,18 @@ if (sectionID) {
       const targetScroll = currentScroll;
       const duration = 500; // Animation duration in milliseconds
       const startTime = performance.now();
+      // Get the bounding rectangle
+      const sectionrect = section.getBoundingClientRect();
+
+      // Get the vertical position
+      const sectionOffset = sectionrect.top;
 
       function scrollAnimation(currentTime) {
         const elapsedTime = currentTime - startTime;
         const scrollProgress = Math.min(elapsedTime / duration, 1);
         const easedProgress = easeOutCubic(scrollProgress);
-        //const scrollTo = currentScroll + (sectionOffset * easedProgress);
-        const scrollTo = currentScroll + (currentScroll * easedProgress);
+        const scrollTo = currentScroll + (sectionOffset * easedProgress);
+        //const scrollTo = currentScroll + (currentScroll * easedProgress);
 
         window.scrollTo(0, scrollTo);
 
