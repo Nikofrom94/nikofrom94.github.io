@@ -166,16 +166,16 @@
 "<a href='#focus-uses-wild-magic'>Utilise la Magie Sauvage</a>"
    ],
    "characterflavor": [ 
-    " with <a href='#flavor-charms-and-figments'>Charms and Figments Flavor</a>",
-    " with <a href='#flavor-combat'>Combat Flavor</a>",
-    " with <a href='#flavor-cozy-magic'>Cozy Magic Flavor</a>",
-    " with <a href='#flavor-divination'>Divination Flavor</a>",
-    " with <a href='#flavor-magic'>Magic Flavor</a>",
-    " with <a href='#flavor-modern-magic'>Modern Magic Flavor</a>",
-    " with <a href='#flavor-protection'>Protection Flavor</a>",
-    " with <a href='#flavor-skills-and-knowledge'>Skills and Knowledge Flavor</a>",
-    " with <a href='#flavor-stealth'>Stealth Flavor</a>",
-    " with <a href='#flavor-technology'>Technology Flavor</a>"
+    " avec <a href='#flavor-charms-and-figments'>Charms and Figments Flavor</a>",
+    " avec <a href='#flavor-combat'>Préférence de Combat</a>",
+    " avec <a href='#flavor-cozy-magic'>Cozy Magic Flavor</a>",
+    " avec <a href='#flavor-divination'>Préférence de Divination</a>",
+    " avec <a href='#flavor-magic'>Préférence de Magie</a>",
+    " avec <a href='#flavor-modern-magic'>Préférence de Magie Moderne</a>",
+    " avec <a href='#flavor-protection'>Préférence de Protection</a>",
+    " avec <a href='#flavor-skills-and-knowledge'>Préférence de Compétences et Connaissances</a>",
+    " avec <a href='#flavor-stealth'>Préférence de Furtivité</a>",
+    " avec <a href='#flavor-technology'>Préférence de Technologie</a>"
    ],
    "characterarc": [
     "Je veux <a href='#arc-aid-a-friend'>Aider un Ami</a>",
