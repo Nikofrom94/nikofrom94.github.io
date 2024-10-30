@@ -58,6 +58,7 @@
     "un <a href='#type-speaker'>Emissaire</a>" 
   ],
   "characterfocus": [ 
+"<a href='#descriptor-craven'>Lâche</a>",
 "<a href='#focus-descends-from-nobility'>A des Ascendants Nobles</a>",
 "<a href='#focus-is-licensed-to-carry'>A le Droit de Porter une Arme à Feu</a>",
 "<a href='#focus-was-foretold'>A été Choisi(e)</a>",
@@ -199,7 +200,7 @@
 		"Je dois apporter à ce monde un peu de <a href='#arc-justice'>Justice</a>",
 		"Je veux <a href='#arc-learn'>Apprendre</a> quelque chose de nouveau",
 		"Je vais <a href='#arc-master-a-skill'>Maitriser une Compétence</a> et devenir un des meilleurs",
-		"Je veux en savoir <plus à propos de mon <a href='#arc-mysterious-background'>Histoire Mysterieuse</a>",
+		"Je veux en savoir plus à propos de mon <a href='#arc-mysterious-background'>Histoire Mysterieuse</a>",
 		"Je veux faire une <a href='#arc-new-discovery'>Nouvelle Découverte</a>",
 		"Je vais devoir <a href='#arc-raise-a-child'>Elever un Enfant</a>",
 		"J'ai besoin de <a href='#arc-recover-from-a-wound-or-trauma'>Récupérer d'une Blessure (ou d'un Traumatisme)</a>",
