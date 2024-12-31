@@ -1,6 +1,8 @@
 const cacheFiles = [
     'index.html',
+    'index-fr.html',
     'og-cspg.html',
+    'og-cspg-fr.html',
     'og-dd.html',
     'css/bootstrap.min.css',
     'css/og-csrd.css',
@@ -32,6 +34,7 @@ const cacheFiles = [
     'images/og-cspg-cover.webp',
     'images/cypher-system-rulebook-cover.webp',
     'db/og-csrd.json',
+    'db/og-csrd-fr.json',
     'db/og-dd.json',
     'icon/android-chrome-192x192.png',
     'icon/android-chrome-512x512.png',
