@@ -1,0 +1,1 @@
+{"model": "cscg.ability", "pk": 13469, "fields": {"pub_date": "2024-09-18T12:45:57.087Z", "created": "2024-09-18T12:45:57.087Z", "updated": "2024-09-18T12:45:57.087Z", "name": "Coureur", "name_en": "Runner", "stat_cost": null, "stat": null, "description": "votre mouvement standard passe de court \u00e0 long. Facilitateur.", "cs_page": "179", "tier": "M", "categories": [9]}}
