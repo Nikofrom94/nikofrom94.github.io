@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Cypher System - Générateur de Personnage</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/og-csrd.css">
+	<link rel="manifest" href="manifest.json">
+    <script src="scripts/bootstrap.bundle.min.js"></script>
+    <script src="scripts/jquery-3.7.1.min.js"></script>
+    <!--<script type="module" src="scripts/og-csrd-randomizer-fr.js"></script>-->
+    <script src="scripts/modeswitch.js"></script>
+    <script src="scripts/waitload.js"></script>
+    <script src="scripts/og-csrd-tooltips.js"></script>
+    <script>
+        class Stat {
+            constructor(name){
+                this.name = name;
+                this.currentpoool = 0;
+                this.maxpool = 0;
+                this.edge = 0;
+                this.maxedgestart = 0;
+            }
+            setpoolmax(max){
+                this.currentpoool = max;
+                this.maxpool = max;
+            }
+            setedge(value){
+                this.edge = value;
+            }
+        }
+        class PJ {
+            constructor(){
+                this.name = "";
+                this.rank = 1;
+                this.pool_allocation = 6;
+                this.pool_allocation_max = 6;
+                this.charactertype = null;
+                this.focus = null;
+                this.flavor = null;
+                this.descriptors = [];
+                this.abilities = [];
+                this.cyphers = [];
+                this.Might = new Stat("Puissance");
+                this.Speed = new Stat("Célérité");
+                this.Intellect = new Stat("Intellect");
+            }
+            SetType(typeref){
+                const url_charactertype = "db/jsons/charactertype/"+typeref+".json";
+                $.getJSON(url_charactertype, function(result){
+                        current_pj.CharacterType = result;
+                        current_pj.SetPoolsFromType();
+                        current_pj.Refresh();
+                });
+            }
+            SetPoolsFromType(){
+                this.Might.setpoolmax(this.CharacterType .fields.might_start);
+                this.Might.edge = 0;
+                this.Might.maxedgestart = this.CharacterType .fields.might_edge_start;
+                this.Speed.setpoolmax(this.CharacterType .fields.speed_start);
+                this.Speed.edge = 0;
+                this.Speed.maxedgestart = this.CharacterType .fields.speed_edge_start;
+                this.Speed.edge = 0;
+                this.Intellect.setpoolmax(this.CharacterType .fields.intellect_start);
+                this.Intellect.maxedgestart = this.CharacterType .fields.intellect_edge_start;
+            }
+            Refresh(){
+                const mightpool = $("#cg-might-pool")[0];
+                mightpool.value = this.Might.maxpool;
+                $("#cg-might-edge")[0].max = this.Might.maxedgestart;
+                $("#cg-might-edge")[0].value = 0;
+                $("#cg-speed-pool")[0].value = this.Speed.maxpool;
+                $("#cg-speed-edge")[0].max = this.Speed.maxedgestart;
+                $("#cg-speed-edge")[0].value = 0;
+                $("#cg-intellect-pool")[0].value = this.Intellect.maxpool;
+                $("#cg-intellect-edge")[0].max = this.Intellect.maxedgestart;
+                $("#cg-intellect-edge")[0].value = 0;
+            }
+        }
+        const current_pj = new PJ();
+
+
+        function LoadCharacterTypes(){
+             $.getJSON("db/jsons/charactertypes.json", function(result){
+                $.each(result, function(i, field){
+                    $("#cg-charactertype-list").append("<tr><th scope=\"row\" class=\"fw-normal\"><div id=\"type-"+field.pk+"\">"+ field.name +"</div></th></tr>");
+                    $("#type-"+field.pk).click(function(){
+                        $("#cg-stats").show();
+                        current_pj.SetType(field.pk);
+                    });
+                });
+            });
+        }
+
+        function UpdateStat(stat, new_value){
+            const diff = new_value - stat.maxpool;
+            if(diff > 0){
+                if(current_pj.pool_allocation > 0){
+                    if(current_pj.pool_allocation >= diff){
+                        current_pj.pool_allocation = current_pj.pool_allocation - diff;
+                        stat.setpoolmax(new_value);
+                    }else{
+                        new_value = stat.maxpool + current_pj.pool_allocation;
+                        current_pj.pool_allocation = 0;
+                        stat.setpoolmax(new_value);
+                    }
+                }else{
+                    new_value = stat.maxpool;
+                }
+            }else{
+                current_pj.pool_allocation = current_pj.pool_allocation - diff;
+                stat.setpoolmax(new_value);
+            }
+            $("#cg-pool-points-rank1")[0].value = current_pj.pool_allocation;
+            return new_value;
+        }
+
+        function DefineEvents(){
+            //const new_value = 0;
+            //--------  Might  --------------
+            // Might Pool
+            $("#cg-might-pool").on("change",function(){
+                const new_value = $("#cg-might-pool")[0].value;
+                $("#cg-might-pool")[0].value = UpdateStat(current_pj.Might, new_value);
+            });
+            // Might Edge
+            $("#cg-might-edge").on("change",function(){
+                const new_value = $("#cg-might-edge")[0].value;
+                current_pj.Might.edge = new_value;    
+            });
+            //--------  Speed  --------------
+            //  Speed Pool
+            $("#cg-speed-pool").on("change",function(){
+                const new_value = $("#cg-speed-pool")[0].value;
+                $("#cg-speed-pool")[0].value = pdateStat(current_pj.Speed, new_value);
+            });
+            //  Speed Edge
+            $("#cg-speed-edge").on("change",function(){
+                const new_value = $("#cg-speed-edge")[0].value;
+                current_pj.Speed.edge = new_value;    
+            });
+            //--------  Intellect  --------------
+            // Intellect Pool
+            $("#cg-intellect-pool").on("change",function(){
+                new_value = $("#cg-intellect-pool")[0].value;
+                $("#cg-intellect-pool")[0].value = UpdateStat(current_pj.Intellect, new_value);
+            });
+            //    Intellect Edge
+            $("#cg-intellect-edge").on("change",function(){
+                const new_value = $("#cg-intellect-edge")[0].value;
+                current_pj.Intellect.edge = new_value;    
+            });
+        }
+        function SetDefaultValues(){
+            $("#cg-pool-points-rank1")[0].value = current_pj.pool_allocation;
+        }
+        $(document).ready(function(){
+            LoadCharacterTypes();
+            DefineEvents();
+            SetDefaultValues();
+            $("#cg-stats").hide();
+        });
+    </script>
+</head>
+<body>
+    <nav id="og-navbar" class="container-xxl navbar navbar-expand-md navbar-light theme-light sticky-top og-navbar">
+        <div class="container-xxl">
+            <a class="navbar-brand" href="#top">CS-CharGen (VF)</a>
+            <div class="form-check form-switch ms-auto mt-2 me-2 float-end" aria-hidden="true">
+                <label class="form-check-label ms-3" for="lightSwitch">
+                    <img class="og-icon img-light d-block" src="images/mode-sun.svg" alt="Light Mode">
+                    <img class="og-icon img-dark d-block" src="images/mode-moon.svg" alt="Dark Mode">
+                </label>
+                <input class="form-check-input" type="checkbox" id="lightSwitch">
+            </div>
+        </div>
+    </nav>
+    <div class="container-xxl rounded-3 mt-1 mb-1 print-across" id="cg-content">
+        <main class="ps-3">
+            <div id="part0">
+                <h4 id="focus-creating-new-pj">Création de nouveau personnage avec le Cypher System<a class="og-h-anchor" href="#focus-creating-new-pj" title="Permalink" aria-hidden="true"></a></h4>
+            </div>
+        </main>
+    </div>
+    <!------------------------------------------------->
+    <!---------------- STATS    ----------------------->
+    <!------------------------------------------------->
+    <div class="container-xxl rounded-3 mt-1 mb-1 print-across" id="cg-stats">
+        <table class="table table-light table-striped table-sm table-hover">
+            <thead>
+                <tr><th scope="col">Stat</th><th>Réserve</th><th>Avantage</th></tr>
+            </thead>
+            <tbody id="cg-stat-list">
+                <tr><th>Puissance</th><td><input type="number" id="cg-might-pool" min="1" max="25"></td><td><input type="number" id="cg-might-edge" min="0" max="1"></td></tr>
+                <tr><th>Célérité</th><td><input type="number" id="cg-speed-pool" min="1" max="25"></td><td><input type="number" id="cg-speed-edge" min="0" max="1"></td></tr>
+                <tr><th>Intellect</th><td><input type="number" id="cg-intellect-pool" min="1" max="25"></td><td><input type="number" id="cg-intellect-edge" min="0" max="1"></td></tr>
+            </tbody>
+        </table>
+        <div>Points à répartir: <input type="text" id="cg-pool-points-rank1" readonly value="6"></div>
+    </div>
+    <!------------------------------------------------->
+    <!---------------- Charactertype    ----------------------->
+    <!------------------------------------------------->
+    <div class="container-xxl rounded-3 mt-1 mb-1 print-across" id="cg-choose-charactertype">
+        <main class="ps-3">
+            <div id="part0">
+                <p>Sélectionnez un Type de personnage</p>
+                <div id="cg-charactertype">
+                    <table class="table table-light table-striped table-sm table-hover">
+                        <thead>
+                            <tr><th scope="col">Type</th></tr>
+                        </thead>
+                        <tbody id="cg-charactertype-list">
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
